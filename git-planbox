@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+$baseDir = dirname(__FILE__);
+require_once 'climax/CLImax.php';
+require_once "{$baseDir}/lib/GitPlanbox/Help.php";
+
+CLImaxController::create()
+  // By default we'll show a usage message
+  ->setDefaultCommand(new GitPlanbox_Help)
+  ->addCommand(new GitPlanbox_Help(),   array('help'))
+  // ->addCommand(new GitPlanbox_List(),   array('list'))
+  // ->addCommand(new GitPlanbox_Show(),   array('show'))
+  // ->addCommand(new GitPlanbox_Start(),  array('start'))
+  // ->addCommand(new GitPlanbox_Start(),  array('pause'))
+  // ->addCommand(new GitPlanbox_Finish(), array('finish', 'stop'))
+  ->run($argv, $argc)
+  ;
