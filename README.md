@@ -19,3 +19,7 @@ Generate a help message.
 ### git-planbox list
 
 List stories.
+
+## License
+
+MIT. Pull requests gladly accepted.
