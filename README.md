@@ -15,3 +15,7 @@ A git subcommand for the Planbox project management tool.
 ### git-planbox help
 
 Generate a help message.
+
+### git-planbox list
+
+List stories.
