@@ -12,9 +12,7 @@ class GitPlanbox_Show extends CLIMax_BaseCommand
     // based on the current branch name
     if (!$storyId)
     {
-      // Get branch name from git
-      exec("git symbolic-ref -q HEAD", $resultArray);
-      $resultAsString = implode("\n", $resultArray);
+      $currentBranchName = GitPlanbox_Util::currentGitBranchName();
 
       // Try to parse out a story id
       preg_match("/[0-9]{5,8}/", $resultAsString, $matches);

@@ -8,6 +8,7 @@ require_once "{$baseDir}/lib/GitPlanbox/Config.php";
 require_once "{$baseDir}/lib/GitPlanbox/Session.php";
 require_once "{$baseDir}/lib/GitPlanbox/List.php";
 require_once "{$baseDir}/lib/GitPlanbox/Show.php";
+require_once "{$baseDir}/lib/GitPlanbox/Start.php";
 require_once "{$baseDir}/lib/GitPlanbox/Util.php";
 
 CLImaxController::create()
@@ -16,7 +17,7 @@ CLImaxController::create()
   ->addCommand(new GitPlanbox_Help(),   array('help'))
   ->addCommand(new GitPlanbox_List(),   array('list'))
   ->addCommand(new GitPlanbox_Show(),   array('show'))
-  // ->addCommand(new GitPlanbox_Start(),  array('start'))
+  ->addCommand(new GitPlanbox_Start(),  array('start'))
   // ->addCommand(new GitPlanbox_Start(),  array('pause'))
   // ->addCommand(new GitPlanbox_Finish(), array('finish', 'stop'))
   ->run($argv, $argc)

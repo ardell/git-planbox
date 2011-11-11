@@ -41,4 +41,27 @@ class GitPlanbox_Util
     return 'just now';
   }
 
+  public static function currentGitBranchName()
+  {
+    // Get branch name from git
+    exec("git symbolic-ref -q HEAD", $resultArray, $returnCode);
+    if ($returnCode !== 0) throw new Exception("Could not get current branch name.");
+
+    // Return the first line
+    $branchName = array_pop($resultArray);
+    return trim(str_replace('refs/heads/', '', $branchName));
+  }
+
+  public static function readline($prompt)
+  {
+    if (PHP_OS == 'WINNT') {
+      print($prompt);
+      $line = stream_get_line(STDIN, 1024, PHP_EOL);
+    } else {
+      $line = readline($prompt);
+    }
+
+    return $line;
+  }
+
 }

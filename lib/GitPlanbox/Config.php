@@ -3,9 +3,12 @@
 class GitPlanbox_Config
 {
 
-  private $_email     = NULL;
-  private $_password  = NULL;
-  private $_productid = NULL;
+  private $_email          = NULL;
+  private $_password       = NULL;
+  private $_productid      = NULL;
+  private $_author         = NULL;
+  private $_branchtemplate = '#parent#-#name#-#storyid#-#author#';
+  private $_branchregex    = '/^[a-zA-Z0-9\_]+$/';
 
   const PLANBOX_API_BASE_URI = 'http://www.planbox.com/api/';
 
@@ -52,7 +55,20 @@ class GitPlanbox_Config
     }
     $config->_productid = $vars['planbox.productid'];
 
-    // @TODO: Add preferences for branch naming conventions
+    if (isset($vars['planbox.author']))
+    {
+      $config->_author = $vars['planbox.author'];
+    }
+
+    if (isset($vars['planbox.branchtemplate']))
+    {
+      $config->_branchtemplate = $vars['planbox.branchtemplate'];
+    }
+
+    if (isset($vars['planbox.branchregex']))
+    {
+      $config->_branchregex = $vars['planbox.branchregex'];
+    }
 
     return $config;
   }
@@ -75,6 +91,21 @@ class GitPlanbox_Config
   public function productid()
   {
     return $this->_productid;
+  }
+
+  public function author()
+  {
+    return $this->_author;
+  }
+
+  public function branchtemplate()
+  {
+    return $this->_branchtemplate;
+  }
+
+  public function branchregex()
+  {
+    return $this->_branchregex;
   }
 
 }
