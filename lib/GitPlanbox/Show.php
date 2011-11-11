@@ -12,12 +12,28 @@ class GitPlanbox_Show extends CLIMax_BaseCommand
     // based on the current branch name
     if (!$storyId)
     {
-      throw new Exception("Error: Please specify a story_id to show.");
+      // Get branch name from git
+      exec("git symbolic-ref -q HEAD", $resultArray);
+      $resultAsString = implode("\n", $resultArray);
+
+      // Try to parse out a story id
+      preg_match("/[0-9]{5,8}/", $resultAsString, $matches);
+      if ($matches) $storyId = array_pop($matches);
+    }
+
+    // If we STILL don't know what story to show, throw a usage exception
+    if (!$storyId)
+    {
+      throw new Exception("Please specify a story_id to show.");
     }
 
     // Fetch the story
-    $session    = GitPlanbox_Session::create();
-    $story      = $session->post('get_story', array('story_id' => $storyId));
+    $session = GitPlanbox_Session::create();
+    try {
+      $story   = $session->post('get_story', array('story_id' => $storyId));
+    } catch (GitPlanbox_ApplicationErrorException $e) {
+      throw new Exception("Unable to fetch story {$storyId} from Planbox.");
+    }
 
     // Lines for all stories
     $storyText  = '';

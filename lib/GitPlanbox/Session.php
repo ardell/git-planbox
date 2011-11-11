@@ -65,9 +65,14 @@ class GitPlanbox_Session
     // Handle errors
     if ($httpCode >= 400 && $httpCode)
     {
-      $e = new Exception("Error posting to {$path}");
+      $e = new GitPlanbox_HttpErrorException("Error posting to {$path}");
       $e->httpCode = $httpCode;
       throw $e;
+    }
+
+    if ($responseData->code != 'ok')
+    {
+      throw new GitPlanbox_ApplicationErrorException("Error fetching data");
     }
 
     return $responseData->content;
@@ -79,3 +84,6 @@ class GitPlanbox_Session
   }
 
 }
+
+class GitPlanbox_HttpErrorException extends Exception {}
+class GitPlanbox_ApplicationErrorException extends Exception {}
