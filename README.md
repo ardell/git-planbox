@@ -6,16 +6,27 @@ A git subcommand for the Planbox project management tool.
 
 ## Installation
 
-1. Clone the repo
-2. Step into git-planbox
+### Pear package
+
+1. Run: `pear install ardell.pearfarm.org/GitPlanbox-0.0.4`
+2. Make sure the pear executable path is in your system path.
+
+### Source installation
+
+1. Clone this repository
+2. cd into git-planbox
 3. Clone the CLI repo git://github.com/apinstein/climax.git
 4. Add dir git-planbox to your path
-5. Edit ~/.gitconfig and add a Planbox section:
-[planbox]
-   email=<your email used to log into planbox>
-   password=<your planbox password
-   productid=<planbox product id>
-6. Run `git planbox <subcommand>`
+
+## Post-installation set-up
+
+1. Set up some info that Planbox will need:
+
+    * `git config --global planbox.email=<your planbox account email>`
+    * `git config --global planbox.password=<your planbox password>`
+    * `git config planbox.productid=<planbox product id>` Instructions for finding your product id here: https://www.planbox.com/api/help/http under the "Finding the Product Id" section.
+
+2. Run `git planbox <subcommand>`
 
 ## Sub-commands
 
@@ -34,6 +45,11 @@ Show name, status, description, tasks, and comments for the specified story. If 
 ### git-planbox start &lt;storyid&gt;
 
 Start the specified story. Creates a new branch according to the naming template defined in git config.
+
+## TODO
+
+* Start/stop task timers using `git planbox [start|pause|finish]`
+* Automatically stop other timers when a new task is started.
 
 ## License
 
