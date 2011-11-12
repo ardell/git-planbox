@@ -1,14 +1,17 @@
 #!/usr/bin/env php
 <?php
 
+$baseDir = dirname(__FILE__) . '/php/GitPlanbox'; // Pear installation
+if (!is_dir($baseDir)) $baseDir = '.';            // Git installation
+
 require_once 'climax/CLImax.php';
-require_once "lib/GitPlanbox/Help.php";
-require_once "lib/GitPlanbox/Config.php";
-require_once "lib/GitPlanbox/Session.php";
-require_once "lib/GitPlanbox/List.php";
-require_once "lib/GitPlanbox/Show.php";
-require_once "lib/GitPlanbox/Start.php";
-require_once "lib/GitPlanbox/Util.php";
+require_once "{$baseDir}/lib/GitPlanbox/Help.php";
+require_once "{$baseDir}/lib/GitPlanbox/Config.php";
+require_once "{$baseDir}/lib/GitPlanbox/Session.php";
+require_once "{$baseDir}/lib/GitPlanbox/List.php";
+require_once "{$baseDir}/lib/GitPlanbox/Show.php";
+require_once "{$baseDir}/lib/GitPlanbox/Start.php";
+require_once "{$baseDir}/lib/GitPlanbox/Util.php";
 
 CLImaxController::create()
   // By default we'll show a usage message
