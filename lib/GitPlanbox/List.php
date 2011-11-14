@@ -16,7 +16,11 @@ class GitPlanbox_List extends CLIMax_BaseCommand
     // Format stories nicely
     foreach ($stories as $story)
     {
-      printf("%8s %9s - %-50s\n", "#{$story->id}", $story->type, $story->name);
+      // Skip stories that are done
+      $statusesToSkip = array('completed', 'delivered', 'accepted', 'rejected', 'released', 'blocked');
+      if (in_array($story->status, $statusesToSkip)) continue;
+
+      printf("%8s %9s %10s - %-50s\n", "#{$story->id}", $story->type, $story->status, $story->name);
     }
 
     return 0;
