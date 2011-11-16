@@ -15,7 +15,7 @@ class GitPlanbox_Show extends CLIMax_BaseCommand
       $currentBranchName = GitPlanbox_Util::currentGitBranchName();
 
       // Try to parse out a story id
-      preg_match("/[0-9]{5,8}/", $resultAsString, $matches);
+      preg_match("/[0-9]{5,8}/", $currentBranchName, $matches);
       if ($matches) $storyId = array_pop($matches);
     }
 
