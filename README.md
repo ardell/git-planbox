@@ -8,7 +8,7 @@ A git subcommand for the Planbox project management tool.
 
 ### Pear package
 
-1. Run: `pear install ardell.pearfarm.org/GitPlanbox-0.0.4`
+1. Run: `pear install apinstein.pearfarm.org/climax-0.0.4 && pear install ardell.pearfarm.org/GitPlanbox-0.0.5`
 2. Make sure the pear executable path is in your system path.
 
 ### Source installation
