@@ -1,8 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-$baseDir = dirname(__FILE__) . '/php/GitPlanbox'; // Pear installation
-if (!is_dir($baseDir)) $baseDir = '.';            // Git installation
+$baseDir = dirname(__FILE__);
+if (strpos('@php_bin@', '@php_bin') !== 0)  // a pear install
+{
+  $baseDir = 'GitPlanbox';
+}
 
 require_once 'climax/CLImax.php';
 require_once "{$baseDir}/lib/GitPlanbox/Help.php";
