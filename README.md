@@ -22,9 +22,9 @@ A git subcommand for the Planbox project management tool.
 
 1. Set up some info that Planbox will need:
 
-    * `git config --global planbox.email=<your planbox account email>`
-    * `git config --global planbox.password=<your planbox password>`
-    * `git config planbox.productid=<planbox product id>` Instructions for finding your product id here: https://www.planbox.com/api/help/http under the "Finding the Product Id" section.
+    * `git config --global --add planbox.email <your planbox account email>`
+    * `git config --global --add planbox.password <your planbox password>`
+    * `git config --add planbox.productid <planbox product id>` Instructions for finding your product id here: https://www.planbox.com/api/help/http under the "Finding the Product Id" section.
 
 2. Run `git planbox <subcommand>`
 
