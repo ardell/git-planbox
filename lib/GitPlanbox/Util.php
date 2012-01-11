@@ -52,6 +52,16 @@ class GitPlanbox_Util
     return trim(str_replace('refs/heads/', '', $branchName));
   }
 
+  public static function currentStoryId()
+  {
+    $currentGitBranch = self::currentGitBranchName();
+    $matches = array();
+    preg_match_all("/[0-9]+/", $currentGitBranch, $matches);
+    if (count($matches) != 1) return NULL;
+    $match = array_shift($matches);
+    return intVal($match[0]);
+  }
+
   public static function readline($prompt)
   {
     if (PHP_OS == 'WINNT') {
