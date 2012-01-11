@@ -15,7 +15,7 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     // Get the story from Planbox
     $session = GitPlanbox_Session::create();
     try {
-      $story   = $session->post('get_story', array('story_id' => $storyId));
+      $story = $session->post('get_story', array('story_id' => $storyId));
     } catch (GitPlanbox_ApplicationErrorException $e) {
       throw new Exception("Unable to fetch story {$storyId} from Planbox.");
     }
