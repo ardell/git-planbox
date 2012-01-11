@@ -28,23 +28,26 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     // Ask the user what they'd like to call the branch
     $config = GitPlanbox_Config::get();
     $branch = NULL;
-    while(!$branch)
+    while($branch === NULL)
     {
-      $branch = GitPlanbox_Util::readline("What should we name the branch? ");
-      if (!preg_match($config->branchregex(), $branch))
+      $branch = GitPlanbox_Util::readline("What should we name the branch? (leave blank to stay on {$currentBranch}) ");
+      if ($branch !== '' && !preg_match($config->branchregex(), $branch))
       {
         print("Error: Branch names must match regex: '{$config->branchregex()}'.\n");
         $branch = NULL;
       }
     }
 
-    // Build the branch name based on the branch-name-template in config
-    $branchName = $this->_buildBranchName($branch, $storyId, $currentBranch);
+    if ($branch != '')
+    {
+      // Build the branch name based on the branch-name-template in config
+      $branchName = $this->_buildBranchName($branch, $storyId, $currentBranch);
 
-    // Create the branch
-    $command = "git checkout -b {$branchName} {$currentBranch}";
-    exec($command, $output, $returnCode);
-    if ($returnCode !== 0) throw new Exception("Error creating new branch.");
+      // Create the branch
+      $command = "git checkout -b {$branchName} {$currentBranch}";
+      exec($command, $output, $returnCode);
+      if ($returnCode !== 0) throw new Exception("Error creating new branch.");
+    }
 
     // Start timer
     $this->_startTimer($session, $storyId);
