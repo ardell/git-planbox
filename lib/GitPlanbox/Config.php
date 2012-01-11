@@ -55,6 +55,11 @@ class GitPlanbox_Config
     }
     $config->_productid = $vars['planbox.productid'];
 
+    if (isset($vars['planbox.resourceid']))
+    {
+      $config->_resourceid = $vars['planbox.resourceid'];
+    }
+
     if (isset($vars['planbox.author']))
     {
       $config->_author = $vars['planbox.author'];
@@ -95,6 +100,11 @@ class GitPlanbox_Config
   public function productid()
   {
     return $this->_productid;
+  }
+
+  public function resourceid()
+  {
+    return $this->_resourceid;
   }
 
   public function author()

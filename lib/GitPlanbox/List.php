@@ -11,6 +11,7 @@ class GitPlanbox_List extends CLIMax_BaseCommand
     // Get a list of stories
     $config   = GitPlanbox_Config::get();
     $postData = array('product_id' => $config->productid());
+    if ($config->resourceid()) $postData['resource_id'] = array($config->resourceid()); // Restrict list to the current user if they have specified a planbox.resourceid in gitconfig
     $stories  = $session->post('get_stories', $postData);
 
     // Format stories nicely

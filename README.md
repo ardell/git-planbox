@@ -26,6 +26,7 @@ A git subcommand for the Planbox project management tool.
     * `git config --global --add planbox.password <your planbox password>`
     * `git config --add planbox.productid <planbox product id>` Instructions for finding your product id here: https://www.planbox.com/api/help/http under the "Finding the Product Id" section.
     * `git config --add planbox.author <yourname>` [optional]
+    * `git config --add planbox.resourceid <your planbox resource id>` [optional] To find your resourceid, log into planbox, select your project, then select "My Work", then look for the integer right after "resource_id" in the url. Similar to instructions for planbox.productid.
 
 2. Run `git planbox <subcommand>`
 
