@@ -9,14 +9,14 @@ A git subcommand for the Planbox project management tool.
 ### Pear package
 
 1. Run: `pear install apinstein.pearfarm.org/climax-0.0.4 && pear install ardell.pearfarm.org/GitPlanbox-0.0.11`
-2. Make sure the pear executable path is in your system path.
+2. Make sure the pear executable path is in your system path--pear should have done this correctly. Run: `which git-planbox` to check.
 
 ### Source installation
 
 1. Clone this repository
 2. cd into git-planbox
 3. Clone the CLI repo git://github.com/apinstein/climax.git
-4. Add dir git-planbox to your path
+4. Add the git-planbox directory to your system path
 
 ## Post-installation set-up
 
