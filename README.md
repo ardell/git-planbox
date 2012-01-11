@@ -52,6 +52,10 @@ Start the specified story. Creates a new branch according to the naming template
 
 Pause timers for in-progress tasks on the current story.
 
+### git-planbox finish
+
+Mark task(s) as completed and stop timers for in-progress tasks on the current story.
+
 ## TODO
 
 * Automatically stop other timers when a new task is started.
