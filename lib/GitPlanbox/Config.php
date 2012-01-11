@@ -58,6 +58,10 @@ class GitPlanbox_Config
     if (isset($vars['planbox.author']))
     {
       $config->_author = $vars['planbox.author'];
+    } else {
+      // Use the current system user, like: `whoami`
+      $posixUser = posix_getpwuid(posix_geteuid());
+      $config->_author = $posixUser['name'];
     }
 
     if (isset($vars['planbox.branchtemplate']))
