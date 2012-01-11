@@ -49,7 +49,8 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
       if ($returnCode !== 0) throw new Exception("Error creating new branch.");
     }
 
-    // Start timer
+    // Update timers
+    $this->_stopRunningTimers($session);
     $this->_startTimer($session, $storyId);
 
     // Success!
@@ -74,6 +75,67 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     }
 
     return $branchTemplate;
+  }
+
+  private function _stopRunningTimers($session)
+  {
+    $config = GitPlanbox_Config::get();
+
+    // Don't change any timers unless they're managed by this user
+    if (!$config->resourceid()) return;
+
+    // Fetch stories
+    $postData = array(
+      'product_id'  => $config->productid(),
+      'resource_id' => $config->resourceid(),
+    );
+    $stories  = $session->post('get_stories', $postData);
+
+    // Find tasks that are in progress
+    $inProgress = array();
+    foreach ($stories as $story)
+    {
+      $storyHasTasksInProgress = false;
+      foreach ($story->tasks as $task)
+      {
+        if ($task->status == 'inprogress')
+        {
+          $storyHasTasksInProgress = true;
+        }
+      }
+      if ($storyHasTasksInProgress)
+      {
+        array_push($inProgress, $story);
+      }
+    }
+
+    // Ask the user if they'd like to pause the running timers
+    if (count($inProgress) > 0)
+    {
+      print("The following stories have one or more tasks in progress:\n");
+      foreach ($inProgress as $story)
+      {
+        printf("%8s %10s - %-50s\n", "#{$story->id}", $story->status, $story->name);
+      }
+      $response = GitPlanbox_Util::readline("Pause timers for these tasks? [Y/n] ");
+      if ($response == '' || strtolower($response) == 'y' || strtolower($response) == 'yes')
+      {
+        foreach ($inProgress as $story)
+        {
+          foreach ($story->tasks as $task)
+          {
+            // Stop the timer
+            $postData = array(
+              'story_id' => $story->id,
+              'task_id'  => $task->id,
+              'status'   => 'pending',
+            );
+            $session->post('update_task', $postData);
+          }
+        }
+        print("Paused timers for " . count($inProgress) . " stories.\n");
+      }
+    }
   }
 
   private function _startTimer($session, $storyId)
