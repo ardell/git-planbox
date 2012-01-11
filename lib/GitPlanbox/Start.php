@@ -10,7 +10,7 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     {
       throw new Exception("Please specify a story_id to start.");
     }
-    $storyId = $arguments[0];
+    $storyId = ltrim($arguments[0], "# ");
 
     // Get the story from Planbox
     $session = GitPlanbox_Session::create();
