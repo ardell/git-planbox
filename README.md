@@ -48,6 +48,8 @@ Show name, status, description, tasks, and comments for the specified story. If 
 
 Start the specified story. Creates a new branch according to the naming template defined in git config. If there is more than one task within the story, git-planbox asks which task you would like to work on, then starts the timer for that task.
 
+If timers are running for other tasks that you own, git-planbox will ask whether you want to pause them before starting the timer for the new task. Use this to help you accurately measure time spent working on each task.
+
 ### git-planbox pause
 
 Pause timers for in-progress tasks on the current story.
