@@ -69,14 +69,6 @@ class GitPlanbox_Finish extends CLIMax_BaseCommand
       if (!$storyId) throw new Exception("I didn't understand that task id.");
     }
 
-    // Mark the STORY as completed now
-    $postData = array(
-                  'story_id' => $storyId,
-                  'status'   => 'completed',
-                );
-    $session->post('update_story', $postData);
-    print("Marked story {$storyId} as completed.\n");
-
     return 0;
   }
 
