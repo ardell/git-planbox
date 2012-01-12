@@ -44,9 +44,13 @@ List stories.
 
 Show name, status, description, tasks, and comments for the specified story. If no storyid is specified then git-planbox will attempt to parse a storyid from the current git branch name.
 
-### git-planbox start &lt;storyid&gt;
+### git-planbox start [&lt;storyid&gt;]
 
-Start the specified story. Creates a new branch according to the naming template defined in git config. If there is more than one task within the story, git-planbox asks which task you would like to work on, then starts the timer for that task.
+Start the specified story, or start another task from the current story that is being worked on.
+
+If you are beginning work on a different story, git-planbox will create a new branch according to the naming template defined in git config.
+
+If there is more than one task within the story, git-planbox will ask which task you would like to work on, then start the timer for that task.
 
 If timers are running for other tasks that you own, git-planbox will ask whether you want to pause them before starting the timer for the new task. Use this to help you accurately measure time spent working on each task.
 

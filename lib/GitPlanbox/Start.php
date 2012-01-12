@@ -5,12 +5,26 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
 
   public function run($arguments, CLImaxController $cliController)
   {
-    // Require a story id
-    if (!isset($arguments[0]))
+    // First try the storyId specified on the command line
+    $storyId = NULL;
+    if (isset($arguments[0]))
     {
-      throw new Exception("Please specify a story_id to start.");
+      $storyId = ltrim($arguments[0], "# ");
     }
-    $storyId = ltrim($arguments[0], "# ");
+
+    // If no storyId was specified on the command line, try to
+    // parse it out of the current branch name
+    if (!$storyId)
+    {
+      $storyId = GitPlanbox_Util::currentStoryId();
+    }
+
+    // If we still don't have a story id, tell the user to please
+    // specify one
+    if (!$storyId)
+    {
+      throw new Exception("Couldn't auto-detect a story_id, please specify one like so: git planbox start 12345");
+    }
 
     // Get the story from Planbox
     $session = GitPlanbox_Session::create();
@@ -20,9 +34,26 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
       throw new Exception("Unable to fetch story {$storyId} from Planbox.");
     }
 
+    // Switch branches
+    $this->_switchBranches($story);
+
+    // Update timers
+    $this->_stopRunningTimers($session);
+    $this->_startTimer($session, $storyId);
+
+    // Success!
+    return 0;
+  }
+
+  private function _switchBranches($targetStory)
+  {
+    // Don't switch branches if we're not switching stories
+    $currentStoryId = GitPlanbox_Util::currentStoryId();
+    if ($targetStory->id == $currentStoryId) return;
+
     // Confirm that they want to branch off the current branch
     $currentBranch = GitPlanbox_Util::currentGitBranchName();
-    print("Starting story: {$story->name}\n");
+    print("Starting story: {$targetStory->name}\n");
     print("  (branching off {$currentBranch})\n");
 
     // Ask the user what they'd like to call the branch
@@ -41,20 +72,13 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     if ($branch != '')
     {
       // Build the branch name based on the branch-name-template in config
-      $branchName = $this->_buildBranchName($branch, $storyId, $currentBranch);
+      $branchName = $this->_buildBranchName($branch, $targetStory->id, $currentBranch);
 
       // Create the branch
       $command = "git checkout -b {$branchName} {$currentBranch}";
       exec($command, $output, $returnCode);
       if ($returnCode !== 0) throw new Exception("Error creating new branch.");
     }
-
-    // Update timers
-    $this->_stopRunningTimers($session);
-    $this->_startTimer($session, $storyId);
-
-    // Success!
-    return 0;
   }
 
   private function _buildBranchName($branchName, $storyId, $parent)
