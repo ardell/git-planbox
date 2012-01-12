@@ -23,13 +23,13 @@ COMMANDS
   git-planbox show
     Show tasks, details, comments, and status for a story.
 
-  git-planbox start
+  git-planbox start [<storyId>]
     Begin working on a task. Enforces branch naming conventions and starts the timer for a task.
 
-  git-planbox pause
+  git-planbox pause [<storyId>]
     Pause the timer for a task if it is running.
 
-  git-planbox finish
+  git-planbox finish [<storyId>]
     Mark a task as finished. Stops the task's timer if it is running.
 
   git-planbox help

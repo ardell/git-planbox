@@ -50,11 +50,11 @@ Start the specified story. Creates a new branch according to the naming template
 
 If timers are running for other tasks that you own, git-planbox will ask whether you want to pause them before starting the timer for the new task. Use this to help you accurately measure time spent working on each task.
 
-### git-planbox pause
+### git-planbox pause [&lt;storyId&gt;]
 
-Pause timers for in-progress tasks on the current story.
+Pause timers for in-progress tasks.
 
-### git-planbox finish
+### git-planbox finish [&lt;storyId&gt;]
 
 Mark task(s) as completed and stop timers for in-progress tasks on the current story.
 

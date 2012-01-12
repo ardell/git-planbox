@@ -5,14 +5,23 @@ class GitPlanbox_Pause extends CLIMax_BaseCommand
 
   public function run($arguments, CLImaxController $cliController)
   {
-    // First look for the story id in the current git branch name
-    $storyId = GitPlanbox_Util::currentStoryId();
+    // Look for a story id on the command line
+    $storyId = NULL;
+    if (isset($arguments[0]))
+    {
+      $storyId = ltrim($arguments[0], "# ");
+    }
 
-    // If not found, ask the user for the story id they're working on
+    // Look for the story id in the current git branch name
     if (!$storyId)
     {
-      $storyId = intVal(GitPlanbox_Util::readline("I couldn't auto-detect which story you're working on, what is the story id?"));
-      if (!$storyId) throw new Exception("I didn't understand that story id.");
+      $storyId = GitPlanbox_Util::currentStoryId();
+    }
+
+    // Require a storyId to move forward
+    if (!$storyId)
+    {
+      throw new Exception("I was unable to auto-detect which story id you would like to pause, please specify it like this: 'git planbox pause 12345'");
     }
 
     // Fetch the story from Planbox
