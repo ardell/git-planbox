@@ -57,9 +57,8 @@ class GitPlanbox_Pause extends CLIMax_BaseCommand
     }
 
     // Otherwise ask the user which task they'd like to pause (allow pausing all too!)
-    foreach ($story->tasks as $task)
+    foreach ($tasksByStatus['inprogress'] as $task)
     {
-      $tasksByTaskId[$task->id] = $task;
       printf("%8s %10s - %-50s\n", "#{$task->id}", $task->status, $task->name);
     }
     $taskId = GitPlanbox_Util::readline("Which task id would you like to pause? You can also say all... ");

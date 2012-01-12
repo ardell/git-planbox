@@ -124,6 +124,8 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
         {
           foreach ($story->tasks as $task)
           {
+            if ($task->status != 'inprogress') continue;
+
             // Stop the timer
             $postData = array(
               'story_id' => $story->id,

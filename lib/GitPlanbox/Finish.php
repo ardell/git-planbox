@@ -50,15 +50,14 @@ class GitPlanbox_Finish extends CLIMax_BaseCommand
     }
 
     // Otherwise ask the user which task they'd like to stop (allow pausing all too!)
-    foreach ($story->tasks as $task)
+    foreach ($tasksByStatus['inprogress'] as $task)
     {
-      $tasksByTaskId[$task->id] = $task;
       printf("%8s %10s - %-50s\n", "#{$task->id}", $task->status, $task->name);
     }
     $taskId = GitPlanbox_Util::readline("Which task id would you like to finish? You can also say all... ");
     if (strtolower($taskId) === 'all')
     {
-      foreach ($tasksByTaskId as $task)
+      foreach ($tasksByStatus['inprogress'] as $task)
       {
         $this->_stopTimerForTask($session, $storyId, $task->id);
       }
