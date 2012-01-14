@@ -1,0 +1,4 @@
+#!/bin/sh
+
+git-planbox prepare-commit-message $1
+
