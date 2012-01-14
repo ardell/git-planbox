@@ -5,12 +5,20 @@ class GitPlanbox_List extends CLIMax_BaseCommand
 
   public function run($arguments, CLImaxController $cliController)
   {
+    // Pull in iterations if they've been specified, otherwise
+    // use current as default
+    $timeframe = 'current';
+    if (isset($arguments[0])) $timeframe = explode(',', $arguments[0]);
+
     // Create a session so we can run commands
     $session = GitPlanbox_Session::create();
 
     // Get a list of stories
     $config   = GitPlanbox_Config::get();
-    $postData = array('product_id' => $config->productid());
+    $postData = array(
+      'product_id' => $config->productid(),
+      'timeframe'  => $timeframe,
+    );
     if ($config->resourceid()) $postData['resource_id'] = array($config->resourceid()); // Restrict list to the current user if they have specified a planbox.resourceid in gitconfig
     $stories  = $session->post('get_stories', $postData);
 

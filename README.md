@@ -36,9 +36,9 @@ A git subcommand for the Planbox project management tool.
 
 Generate a help message.
 
-### git-planbox list
+### git-planbox list [&lt;timeframe&gt;,&lt;timeframe&gt;,...]
 
-List stories.
+List stories from a given timeframe (iteration). Defaults to current. List multiple timeframes by separating them with commas, e.g. `git planbox list current,next,backlog`. Timeframe options are: before_last, last, current, next, after_next or backlog.
 
 ### git-planbox show [&lt;storyid&gt;]
 

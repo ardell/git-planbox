@@ -17,10 +17,10 @@ DESCRIPTION
   git-planbox provides a simple integration between the Git version control system and the Planbox project management tool (http://www.planbox.com).
 
 COMMANDS
-  git-planbox list
-    Get a list of stories to work on.
+  git-planbox list [<timeframe>,<timeframe>]
+    Get a list of stories to work on. Specify multiple timeframes by separating them with commas. Timeframe options are: before_last, last, current, next, after_next or backlog.
 
-  git-planbox show
+  git-planbox show [<storyId>]
     Show tasks, details, comments, and status for a story.
 
   git-planbox start [<storyId>]
