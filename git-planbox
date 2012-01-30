@@ -16,6 +16,7 @@ require_once "{$baseDir}/lib/GitPlanbox/Show.php";
 require_once "{$baseDir}/lib/GitPlanbox/Start.php";
 require_once "{$baseDir}/lib/GitPlanbox/Pause.php";
 require_once "{$baseDir}/lib/GitPlanbox/Finish.php";
+require_once "{$baseDir}/lib/GitPlanbox/Status.php";
 require_once "{$baseDir}/lib/GitPlanbox/Util.php";
 
 CLImaxController::create()
@@ -27,5 +28,6 @@ CLImaxController::create()
   ->addCommand(new GitPlanbox_Start(),  array('start'))
   ->addCommand(new GitPlanbox_Pause(),  array('pause'))
   ->addCommand(new GitPlanbox_Finish(), array('finish'))
+  ->addCommand(new GitPlanbox_Status(), array('status'))
   ->run($argv, $argc)
   ;

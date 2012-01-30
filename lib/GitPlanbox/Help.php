@@ -23,6 +23,9 @@ COMMANDS
   git-planbox show [<storyId>]
     Show tasks, details, comments, and status for a story.
 
+  git-planbox status [<storyId>]
+    Get the status of a story and the name of each branch that referenced commits have been merged to.
+
   git-planbox start [<storyId>]
     Begin working on a task. Enforces branch naming conventions and starts the timer for a task.
 

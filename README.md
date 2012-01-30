@@ -44,6 +44,10 @@ List stories from a given timeframe (iteration). Defaults to current. List multi
 
 Show name, status, description, tasks, and comments for the specified story. If no storyid is specified then git-planbox will attempt to parse a storyid from the current git branch name.
 
+### git-planbox status [&lt;storyId&gt;]
+
+Get the status of a story and the name of each branch that referenced commits have been merged to.
+
 ### git-planbox start [&lt;storyid&gt;]
 
 Start the specified story, or start another task from the current story that is being worked on.
@@ -61,10 +65,6 @@ Pause timers for in-progress tasks.
 ### git-planbox finish [&lt;storyId&gt;]
 
 Mark task(s) as completed and stop timers for in-progress tasks on the current story.
-
-## TODO
-
-* Automatically stop other timers when a new task is started.
 
 ## License
 
