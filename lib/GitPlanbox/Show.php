@@ -6,7 +6,11 @@ class GitPlanbox_Show extends CLIMax_BaseCommand
   public function run($arguments, CLImaxController $cliController)
   {
     // If we have an argument, show the story with _that_ id
-    $storyId = isset($arguments[0]) ? $arguments[0] : NULL;
+    $storyId = NULL;
+    if (isset($arguments[0]))
+    {
+      $storyId = ltrim($arguments[0], "# ");
+    }
 
     // Otherwise try to figure out what story we're working on
     // based on the current branch name
