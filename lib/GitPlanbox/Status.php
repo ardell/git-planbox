@@ -58,7 +58,7 @@ class GitPlanbox_Status extends CLIMax_BaseCommand
       $info['message'] = $commitMessage;
 
       // Find out which git branches contain this sha
-      $command = "git branch --contains {$sha} 2>&1";
+      $command = "git branch -a --contains {$sha} 2>&1";
       $output = '';
       exec($command, $output, $returnCode);
       if ($returnCode === 0)
