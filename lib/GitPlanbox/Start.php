@@ -141,8 +141,8 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
       {
         printf("%8s %10s - %-50s\n", "#{$story->id}", $story->status, $story->name);
       }
-      $response = GitPlanbox_Util::readline("Pause timers for these tasks? [Y/n] ");
-      if ($response == '' || strtolower($response) == 'y' || strtolower($response) == 'yes')
+      $response = GitPlanbox_Util::readline("Pause (p), finish (f), or ignore (i) these tasks? [P/f/i] ");
+      if ($response == '' || strtolower($response) == 'p' || strtolower($response) == 'pause')
       {
         foreach ($inProgress as $story)
         {
@@ -160,6 +160,23 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
           }
         }
         print("Paused timers for " . count($inProgress) . " stories.\n");
+      } else if (strtolower($response) == 'f' || strtolower($response) == 'finish') {
+        foreach ($inProgress as $story)
+        {
+          foreach ($story->tasks as $task)
+          {
+            if ($task->status != 'inprogress') continue;
+
+            // Stop the timer
+            $postData = array(
+              'story_id' => $story->id,
+              'task_id'  => $task->id,
+              'status'   => 'completed',
+            );
+            $session->post('update_task', $postData);
+          }
+        }
+        print("Finished " . count($inProgress) . " stories.\n");
       }
     }
   }
