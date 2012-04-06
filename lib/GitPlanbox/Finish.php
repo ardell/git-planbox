@@ -41,6 +41,13 @@ class GitPlanbox_Finish extends CLIMax_BaseCommand
       $tasksByTaskId[$task->id] = $task;
     }
 
+    // If there are no status:inprogress tasks, tell the user and return
+    if (count($tasksByStatus['inprogress']) < 1)
+    {
+      print("There are no in-progress tasks for story #{$storyId}.\n");
+      return 0;
+    }
+
     // If there's only one status:inprogress task, set it to status:completed
     if (count($tasksByStatus['inprogress']) == 1)
     {
