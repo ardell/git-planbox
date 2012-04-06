@@ -39,7 +39,7 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
 
     // Update timers
     $this->_stopRunningTimers($session);
-    $this->_startTimer($session, $storyId);
+    $this->_startTimer($session, $story);
 
     // Success!
     return 0;
@@ -72,7 +72,7 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     if ($branch != '')
     {
       // Build the branch name based on the branch-name-template in config
-      $branchName = $this->_buildBranchName($branch, $targetStory->id, $currentBranch);
+      $branchName = $this->_buildBranchName($branch, $targetStory, $currentBranch);
 
       // Create the branch
       $command = "git checkout -b {$branchName} {$currentBranch}";
@@ -81,7 +81,7 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     }
   }
 
-  private function _buildBranchName($branchName, $storyId, $parent)
+  private function _buildBranchName($branchName, $story, $parent)
   {
     $config         = GitPlanbox_Config::get();
     $branchTemplate = $config->branchtemplate();
@@ -91,7 +91,7 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
       'author'  => $config->author(),
       'name'    => $branchName,
       'parent'  => $parent,
-      'storyid' => $storyId,
+      'storyid' => $story->id,
     );
     foreach ($substitutions as $key => $value)
     {
@@ -181,24 +181,20 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     }
   }
 
-  private function _startTimer($session, $storyId)
+  private function _startTimer($session, $story)
   {
-    // Fetch the story
-    $postData = array('story_id' => $storyId);
-    $story  = $session->post('get_story', $postData);
-
     // Don't do anything if there are no tasks
     if (count($story->tasks) < 1)
     {
-      print("Not starting timer because story {$storyId} has no tasks.");
+      print("Not starting timer because story {$story->id} has no tasks.");
       return;
     }
 
     // If we have only one task, start the timer for that task
     if (count($story->tasks) == 1)
     {
-      $task = array_shift($story->tasks);
-      $this->_startTimerForTask($session, $storyId, $task->id);
+      $task = $story->tasks[0];
+      $this->_startTimerForTask($session, $story, $task->id);
       return;
     }
 
@@ -212,23 +208,43 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     $taskId = intVal(GitPlanbox_Util::readline("Which task would you like to work on? "));
     if (!isset($tasksByTaskId[$taskId]))
     {
-      throw new Exception("Invalid task id {$taskId} for story {$storyId}, expected one of: " . implode(', ', array_keys($tasksByTaskId)) . '.');
+      throw new Exception("Invalid task id {$taskId} for story {$story->id}, expected one of: " . implode(', ', array_keys($tasksByTaskId)) . '.');
     }
-    $this->_startTimerForTask($session, $storyId, $taskId);
+    $this->_startTimerForTask($session, $story, $taskId);
   }
 
-  private function _startTimerForTask($session, $storyId, $taskId)
+  private function _startTimerForTask($session, $story, $taskId)
   {
-    if (!$storyId) throw new Exception("Expected storyId, got " . var_export($storyId, true));
+    if (!$story) throw new Exception("Expected story, got " . var_export($story, true));
     if (!$taskId) throw new Exception("Expected taskId, got " . var_export($taskId, true));
 
+    // Find the task
+    $task = NULL;
+    foreach ($story->tasks as $t)
+    {
+        print("Found task id {$t->id}\n");
+        if ($t->id == $taskId)
+        {
+            $task = $t;
+            break;
+        }
+    }
+    if (!$task) throw new Exception("Couldn't find that task with id: " . var_export($taskId, true));
+
     $postData = array(
-                  'story_id' => $storyId,
+                  'story_id' => $story->id,
                   'task_id'  => $taskId,
-                  'status'  => 'inprogress',
+                  'status'   => 'inprogress',
                 );
+
+    // If the task is unassigned, assign it to the current user
+    if ($task->resource_id === NULL)
+    {
+        $postData['resource_id'] = GitPlanbox_Config::resourceid();
+    }
+
     $session->post('update_task', $postData);
-    print("Started timer for story #{$storyId}, task #{$taskId}.\n");
+    print("Started timer for story #{$story->id}, task #{$taskId}.\n");
   }
 
 }
