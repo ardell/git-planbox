@@ -1,4 +1,5 @@
 <?php
+# vim: set ts=2 sw=2:
 
 class GitPlanbox_Pause extends CLIMax_BaseCommand
 {
