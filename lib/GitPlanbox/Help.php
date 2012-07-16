@@ -35,6 +35,9 @@ COMMANDS
   git-planbox finish [<storyId>]
     Mark a task as finished. Stops the task's timer if it is running.
 
+  git-planbox releasable [<timeframe>,<timeframe>]
+    List planbox tasks that are ready to be released.
+
   git-planbox help
     Display this help message.
 

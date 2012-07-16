@@ -66,6 +66,10 @@ Pause timers for in-progress tasks.
 
 Mark task(s) as completed and stop timers for in-progress tasks on the current story.
 
+### git-planbox releasable [&lt;timeframe&gt;,&lt;timeframe&gt;]
+
+List all the stories that are ready for release (completed, delivered, accepted statuses).
+
 ## License
 
 MIT. Pull requests gladly accepted.

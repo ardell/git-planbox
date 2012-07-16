@@ -17,17 +17,20 @@ require_once "{$baseDir}/lib/GitPlanbox/Start.php";
 require_once "{$baseDir}/lib/GitPlanbox/Pause.php";
 require_once "{$baseDir}/lib/GitPlanbox/Finish.php";
 require_once "{$baseDir}/lib/GitPlanbox/Status.php";
+require_once "{$baseDir}/lib/GitPlanbox/Search.php";
+require_once "{$baseDir}/lib/GitPlanbox/Releasable.php";
 require_once "{$baseDir}/lib/GitPlanbox/Util.php";
 
 CLImaxController::create()
   // By default we'll show a usage message
   ->setDefaultCommand(new GitPlanbox_Help)
-  ->addCommand(new GitPlanbox_Help(),   array('help'))
-  ->addCommand(new GitPlanbox_List(),   array('list'))
-  ->addCommand(new GitPlanbox_Show(),   array('show'))
-  ->addCommand(new GitPlanbox_Start(),  array('start'))
-  ->addCommand(new GitPlanbox_Pause(),  array('pause'))
-  ->addCommand(new GitPlanbox_Finish(), array('finish'))
-  ->addCommand(new GitPlanbox_Status(), array('status'))
+  ->addCommand(new GitPlanbox_Help(),       array('help'))
+  ->addCommand(new GitPlanbox_List(),       array('list'))
+  ->addCommand(new GitPlanbox_Show(),       array('show'))
+  ->addCommand(new GitPlanbox_Start(),      array('start'))
+  ->addCommand(new GitPlanbox_Pause(),      array('pause'))
+  ->addCommand(new GitPlanbox_Finish(),     array('finish'))
+  ->addCommand(new GitPlanbox_Status(),     array('status'))
+  ->addCommand(new GitPlanbox_Releasable(), array('releasable', 'releaseable'))
   ->run($argv, $argc)
   ;
