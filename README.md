@@ -70,6 +70,10 @@ Mark task(s) as completed and stop timers for in-progress tasks on the current s
 
 List all the stories that are ready for release (completed, delivered, accepted statuses).
 
+### git-planbox stuck [&lt;timeframe&gt;,&lt;timeframe&gt;]
+
+List all the stories that are stuck (rejected or blocked statuses).
+
 ## License
 
 MIT. Pull requests gladly accepted.

@@ -20,6 +20,7 @@ require_once "{$baseDir}/lib/GitPlanbox/Finish.php";
 require_once "{$baseDir}/lib/GitPlanbox/Status.php";
 require_once "{$baseDir}/lib/GitPlanbox/Search.php";
 require_once "{$baseDir}/lib/GitPlanbox/Releasable.php";
+require_once "{$baseDir}/lib/GitPlanbox/Stuck.php";
 require_once "{$baseDir}/lib/GitPlanbox/Util.php";
 
 CLImaxController::create()
@@ -33,5 +34,6 @@ CLImaxController::create()
   ->addCommand(new GitPlanbox_Finish(),     array('finish'))
   ->addCommand(new GitPlanbox_Status(),     array('status'))
   ->addCommand(new GitPlanbox_Releasable(), array('releasable', 'releaseable'))
+  ->addCommand(new GitPlanbox_Stuck(),      array('stuck'))
   ->run($argv, $argc)
   ;
