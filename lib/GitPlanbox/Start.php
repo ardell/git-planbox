@@ -223,7 +223,6 @@ class GitPlanbox_Start extends CLIMax_BaseCommand
     $task = NULL;
     foreach ($story->tasks as $t)
     {
-        print("Found task id {$t->id}\n");
         if ($t->id == $taskId)
         {
             $task = $t;
