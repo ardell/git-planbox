@@ -11,7 +11,7 @@ class GitPlanbox_Config
   private $_branchtemplate = '#parent#-#name#-#storyid#-#author#';
   private $_branchregex    = '/^[a-zA-Z0-9\_]+$/';
 
-  const PLANBOX_API_BASE_URI = 'http://www.planbox.com/api/';
+  const PLANBOX_API_BASE_URI = 'https://www.planbox.com/api/';
 
   private function __construct()
   {
