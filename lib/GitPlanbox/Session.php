@@ -24,7 +24,7 @@ class GitPlanbox_Session
   public function post($path, $postData = array())
   {
     // Log in if necessary
-    $this->_logIn();
+    $postData['access_token'] = $this->_logIn();
     return $this->_doPost($path, $postData);
   }
 
@@ -37,7 +37,8 @@ class GitPlanbox_Session
       'email'    => $this->_config->email(),
       'password' => $this->_config->password(),
     );
-    return $this->_doPost('login', $creds);
+    $response = $this->_doPost('login', $creds);
+    return $response->access_token;
   }
 
   private function _doPost($path, $postData = array())
@@ -52,8 +53,6 @@ class GitPlanbox_Session
     curl_setopt($curl, CURLOPT_RETURNTRANSFER,  true);
     curl_setopt($curl, CURLOPT_POST,            count($postData));
     curl_setopt($curl, CURLOPT_POSTFIELDS,      $postString);
-    curl_setopt($curl, CURLOPT_COOKIEFILE,      $cookieFile);
-    curl_setopt($curl, CURLOPT_COOKIEJAR,       $cookieFile);
     $responseText = curl_exec($curl);
 
     // Get the results
